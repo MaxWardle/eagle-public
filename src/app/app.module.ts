@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { Ng2PageScrollModule } from 'ng2-page-scroll';
+import { NgxPageScrollModule } from 'ngx-page-scroll';
 import { BootstrapModalModule } from 'ng2-bootstrap-modal';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -53,7 +53,7 @@ import { ActivitiesListTableRowsComponent } from './project/project-activites/ac
     FormsModule,
     HttpClientModule,
     NgbModule.forRoot(),
-    Ng2PageScrollModule,
+    NgxPageScrollModule,
     BootstrapModalModule,
     SharedModule,
     ProjectModule,
