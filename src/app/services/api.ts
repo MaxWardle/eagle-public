@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Http, ResponseContentType } from '@angular/http';
+import { ResponseContentType } from '@angular/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { ErrorObservable } from 'rxjs/observable/ErrorObservable';
 import 'rxjs/add/observable/throw';
@@ -27,7 +28,7 @@ export class ApiService {
   public env: 'local' | 'dev' | 'test' | 'prod';
 
   constructor(
-    private http: Http
+    private http: HttpClient
   ) {
     // const currentUser = JSON.parse(window.localStorage.getItem('currentUser'));
     // this.token = currentUser && currentUser.token;

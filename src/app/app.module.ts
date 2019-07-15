@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { TagInputModule } from 'ngx-chips';
+// import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
@@ -48,12 +48,12 @@ import { ActivitiesListTableRowsComponent } from './project/project-activites/ac
 @NgModule({
   imports: [
     BrowserAnimationsModule,
-    TagInputModule,
+    // TagInputModule,
     BrowserModule,
     FormsModule,
-    HttpModule,
+    HttpClientModule,
     NgbModule.forRoot(),
-    Ng2PageScrollModule.forRoot(),
+    Ng2PageScrollModule,
     BootstrapModalModule,
     SharedModule,
     ProjectModule,

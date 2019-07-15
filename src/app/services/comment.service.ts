@@ -21,7 +21,7 @@ export class CommentService {
   // get count of projects
   getCountById(commentPeriodId): Observable<number> {
     return this.api.getCountCommentsById(commentPeriodId)
-      .map(res => {
+      .map((res: any) => {
         // retrieve the count from the response headers
         return parseInt(res.headers.get('x-total-count'), 10);
       })
@@ -32,7 +32,7 @@ export class CommentService {
   // (without documents)
   getByPeriodId(periodId: string, pageNum: number = null, pageSize: number = null, getCount: boolean = false) {
     return this.api.getCommentsByPeriodId(pageNum ? pageNum - 1 : pageNum, pageSize, getCount, periodId)
-      .map(res => {
+      .map((res: any) => {
         const comments = res.text() ? res.json() : [];
         comments.forEach((comment, i) => {
           comments[i] = new Comment(comment);
@@ -55,7 +55,7 @@ export class CommentService {
 
     // first get the comment data
     return this.api.getComment(commentId)
-      .map(res => {
+      .map((res: any) => {
         const comments = res.text() ? res.json() : [];
         // return the first (only) comment
         return comments.length > 0 ? new Comment(comments[0]) : null;
@@ -95,7 +95,7 @@ export class CommentService {
     // }
 
     return this.api.addComment(comment)
-      .map(res => {
+      .map((res: any) => {
         const c = res.text() ? res.json() : null;
         return c ? new Comment(c) : null;
       })

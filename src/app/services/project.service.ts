@@ -36,7 +36,7 @@ export class ProjectService {
     Object.keys(appStatusFilters).forEach(key => { if (appStatusFilters[key]) { appStatuses.push(key); } });
 
     return this.api.getProjects(pageNum, pageSize, regions, cpStatuses, appStatuses, applicantFilter, clFileFilter, dispIdFilter, purposeFilter)
-      .map(res => {
+      .map((res: any) => {
         const projects = res.text() ? res.json() : [];
         projects.forEach((project, i) => {
           projects[i] = new Project(project);
@@ -50,7 +50,7 @@ export class ProjectService {
   // get count of projects
   getCount(): Observable<number> {
     return this.api.getCountProjects()
-      .map(res => {
+      .map((res: any) => {
         // retrieve the count from the response headers
         return parseInt(res.headers.get('x-total-count'), 10);
       })
@@ -87,7 +87,7 @@ export class ProjectService {
     }
     // first get the project
     return this.api.getProject(projId, cpStart, cpEnd)
-      .map(res => {
+      .map((res: any) => {
         const projects = res.text() ? res.json() : [];
         if (projects[0].commentPeriodForBanner && projects[0].commentPeriodForBanner.length > 0) {
           projects[0].commentPeriodForBanner = new CommentPeriod(projects[0].commentPeriodForBanner[0]);
