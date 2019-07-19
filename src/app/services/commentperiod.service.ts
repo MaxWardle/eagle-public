@@ -21,7 +21,7 @@ export class CommentPeriodService {
 
   constructor(
     private api: ApiService,
-    private commentService: CommentService
+    private commentService: CommentService,
   ) {
     // user-friendly strings for display
     this.commentPeriodStatuses[this.NOT_STARTED] = 'Commenting Not Started';
@@ -34,20 +34,19 @@ export class CommentPeriodService {
   getAllByProjectId(projId: string): Observable<CommentPeriod[]> {
     return this.api.getPeriodsByProjId(projId)
       .map((res: any) => {
-        const periods = res.text() ? res.json() : [];
-        periods.forEach((period, i) => {
-          periods[i] = new CommentPeriod(period);
-        });
-        return periods;
-      })
-      .map((periods: CommentPeriod[]) => {
-        if (periods.length === 0) {
-          return [] as CommentPeriod[];
+        if (res) {
+          const periods: Array<CommentPeriod> = [];
+          if (!res || res.length === 0) {
+            return { totalCount: 0, data: [] };
+          }
+          res[0].results.forEach(cp => {
+            periods.push(new CommentPeriod(cp));
+          });
+          return { totalCount: res[0].total_items, data: periods };
         }
-
-        return periods;
+        return {};
       })
-      .catch(this.api.handleError);
+      .catch(error => this.api.handleError(error));
   }
 
   // get a specific comment period by its id

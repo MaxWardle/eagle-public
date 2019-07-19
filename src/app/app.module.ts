@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ApplicationRef } from '@angular/core';
 // import { TagInputModule } from 'ngx-chips';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
@@ -99,4 +99,8 @@ import { ActivitiesListTableRowsComponent } from './project/project-activites/ac
   ]
 })
 
-export class AppModule { }
+export class AppModule {
+  constructor(applicationRef: ApplicationRef) {
+    Object.defineProperty(applicationRef, '_rootComponents', {get: () => applicationRef['components']});
+  }
+}
