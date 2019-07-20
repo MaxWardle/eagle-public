@@ -37,12 +37,12 @@ export class CommentPeriodService {
         if (res) {
           const periods: Array<CommentPeriod> = [];
           if (!res || res.length === 0) {
-            return { totalCount: 0, data: [] };
+            return [];
           }
-          res[0].results.forEach(cp => {
+          res.forEach(cp => {
             periods.push(new CommentPeriod(cp));
           });
-          return { totalCount: res[0].total_items, data: periods };
+          return periods;
         }
         return {};
       })
@@ -53,7 +53,10 @@ export class CommentPeriodService {
   getById(periodId: string): Observable<CommentPeriod> {
     return this.api.getPeriod(periodId)
       .map((res: any) => {
-        const periods = res.text() ? res.json() : [];
+        if (!res) {
+          return null;
+        }
+        const periods = res;
         // return the first (only) comment period
         return periods.length > 0 ? new CommentPeriod(periods[0]) : null;
       })

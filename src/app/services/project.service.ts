@@ -17,7 +17,6 @@ import { SearchResults } from 'app/models/search';
 @Injectable()
 export class ProjectService {
   private project: Project = null; // for caching
-  private projectList: Project[] = [];
 
 
   constructor(
@@ -39,19 +38,12 @@ export class ProjectService {
 
     return this.api.getProjects(pageNum, pageSize, regions, cpStatuses, appStatuses, applicantFilter, clFileFilter, dispIdFilter, purposeFilter)
       .map((res: any) => {
-        // const projects = res.text() ? res.json() : [];
-        // projects.forEach((project, i) => {
-        //   projects[i] = new Project(project);
-        //   // FUTURE: derive region code, etc ?
-        // });
-        // return projects;
+        let projectList: Project[] = [];
         if (res) {
-          // let projects: Array<Project> = [];
-          this.projectList = [];
-          res[0].results.forEach(project => {
-            this.projectList.push(new Project(project));
+          res.forEach(project => {
+            projectList.push(new Project(project));
           });
-          return { totalCount: res[0].total_items, data: this.projectList };
+          return projectList;
         }
         return {};
       })
@@ -109,9 +101,8 @@ export class ProjectService {
   getPins(proj: string, pageNum: number, pageSize: number, sortBy: any): Observable<any[]> {
     const searchResults = this.api.getProjectPins(proj, pageNum, pageSize, sortBy)
     .map((res: any) => {
-      let records = JSON.parse(<string>res._body);
       let allResults = <any>[];
-      records.forEach(item => {
+      res.forEach(item => {
         const r = new SearchResults({ type: item._schemaName, data: item });
         allResults.push(r);
       });

@@ -32,14 +32,16 @@ export class CommentService {
     return this.api.getCommentsByPeriodId(pageNum ? pageNum - 1 : pageNum, pageSize, getCount, periodId)
     .map((res: any) => {
       if (res) {
-        const comments: Array<Comment> = [];
+        let comments: Comment[] = [];
         if (!res || res.length === 0) {
           return { totalCount: 0, data: [] };
+          // return [];
         }
-        res[0].results.forEach(c => {
+        res.forEach(c => {
           comments.push(new Comment(c));
         });
-        return { totalCount: res[0].total_items, data: comments };
+        return { totalCount: res.length, data: comments };
+        // return comments;
       }
       return {};
     })
